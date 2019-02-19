@@ -12,7 +12,7 @@ function getLanguageFromURL() {
 export class TVChartContainer extends React.PureComponent {
 
 	static defaultProps = {
-		symbol: 'Coincola:BTC/USD',
+		symbol: 'Coinbase:BTC/USD',
 		interval: '15',
 		containerId: 'tv_chart_container',
 		libraryPath: '/charting_library/',
@@ -55,13 +55,17 @@ export class TVChartContainer extends React.PureComponent {
 			}
 		};
 
-		// window.TradingView.onready(() => {
-		// 	const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		window.TradingView.onready(() => {
+			const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
 
-		// 	widget.onChartReady(() => {
-		// 		console.log('Chart has loaded!')
-		// 	});
-		// });
+			widget.onChartReady(() => {
+				console.log('Chart has loaded!')
+			});
+		});
+
+		/**
+		 * functionality test
+		****
 
 		// 1. resolve symbol to symbolInfo: resolveSymbol, (websocket connect)
 		let symbolInfo
@@ -110,6 +114,8 @@ export class TVChartContainer extends React.PureComponent {
 				subscribeUID
 			)
 		}, 20000)
+		
+		*******/
 	}
 
 	render() {
