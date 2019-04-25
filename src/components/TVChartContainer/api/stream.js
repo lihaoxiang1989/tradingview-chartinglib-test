@@ -2,7 +2,7 @@
 import historyProvider from './historyProvider.js'
 // we use Socket.io client to connect to cryptocompare's socket.io stream
 var io = require('socket.io-client')
-var socket_url = 'wss://streamer.cryptocompare.com'
+var socket_url = 'wss://streamer.cryptocompare.com123'
 var socket = io(socket_url)
 // keep track of subscriptions
 var _subs = []
@@ -43,41 +43,41 @@ socket.on('error', err => {
  console.log('====socket error', err)
 })
 socket.on('m', (e) => {
- // here we get all events the CryptoCompare connection has subscribed to
- // we need to send this new data to our subscribed charts
- const _data= e.split('~')
- if (_data[0] === "3") {
-  // console.log('Websocket Snapshot load event complete')
-  return
- }
- const data = {
-  sub_type: parseInt(_data[0],10),
-  exchange: _data[1],
-  to_sym: _data[2],
-  from_sym: _data[3],
-  trade_id: _data[5],
-  ts: parseInt(_data[6],10),
-  volume: parseFloat(_data[7]),
-  price: parseFloat(_data[8])
- }
- 
- const channelString = `${data.sub_type}~${data.exchange}~${data.to_sym}~${data.from_sym}`
- 
- const sub = _subs.find(e => e.channelString === channelString)
- 
- if (sub) {
-  // disregard the initial catchup snapshot of trades for already closed candles
-  if (data.ts < sub.lastBar.time / 1000) {
-    return
-   }
+  // here we get all events the CryptoCompare connection has subscribed to
+  // we need to send this new data to our subscribed charts
+  const _data= e.split('~')
+  if (_data[0] === "3") {
+      // console.log('Websocket Snapshot load event complete')
+      return
+  }
+  const data = {
+    sub_type: parseInt(_data[0],10),
+    exchange: _data[1],
+    to_sym: _data[2],
+    from_sym: _data[3],
+    trade_id: _data[5],
+    ts: parseInt(_data[6],10),
+    volume: parseFloat(_data[7]),
+    price: parseFloat(_data[8])
+  }
   
-var _lastBar = updateBar(data, sub)
+  const channelString = `${data.sub_type}~${data.exchange}~${data.to_sym}~${data.from_sym}`
+  
+  const sub = _subs.find(e => e.channelString === channelString)
+  
+  if (sub) {
+    // disregard the initial catchup snapshot of trades for already closed candles
+    if (data.ts < sub.lastBar.time / 1000) {
+      return
+    }
+    
+    var _lastBar = updateBar(data, sub)
 
-// send the most recent bar back to TV's realtimeUpdate callback
-  sub.listener(_lastBar)
-  // update our own record of lastBar
-  sub.lastBar = _lastBar
- }
+    // send the most recent bar back to TV's realtimeUpdate callback
+    sub.listener(_lastBar)
+    // update our own record of lastBar
+    sub.lastBar = _lastBar
+  }
 })
 
 // Take a single trade, and subscription record, return updated bar

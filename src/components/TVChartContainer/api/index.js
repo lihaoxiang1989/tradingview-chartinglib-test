@@ -57,6 +57,7 @@ export default {
 		// console.log(`Requesting bars between ${new Date(from * 1000).toISOString()} and ${new Date(to * 1000).toISOString()}`)
 		historyProvider.getBars(symbolInfo, resolution, from, to, firstDataRequest)
 		.then(bars => {
+			console.log('Bars: ', bars)
 			if (bars.length) {
 				onHistoryCallback(bars, {noData: false})
 			} else {

@@ -141,7 +141,10 @@ export class TVChartContainer extends React.PureComponent {
 			/**
 			 * https://github.com/tradingview/charting_library/wiki/Featuresets
 			 */
-			disabled_features: ['use_localstorage_for_settings'],
+			disabled_features: [
+				'volume_force_overlay',
+				'use_localstorage_for_settings'
+			],
 			enabled_features: ['study_templates'],
 
 			// width: '200',
@@ -190,12 +193,12 @@ export class TVChartContainer extends React.PureComponent {
 			theme: 'Dark'
 		};
 
-		window.TradingView.onready(() => {
-			const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
-			widget.onChartReady(() => {
-				console.log('Chart has loaded!')
-			});
+
+		const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
+		widget.onChartReady(() => {
+			console.log('Chart has loaded!')
 		});
+
 
 		// test()
 
