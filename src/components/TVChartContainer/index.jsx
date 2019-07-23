@@ -167,7 +167,7 @@ export class TVChartContainer extends React.PureComponent {
 				// 图表面板网格水平线颜色
 				// "paneProperties.horzGridProperties.color": "#363c4e",
 				// Symbol 在图标上的水印颜色，此处可隐藏
-				// "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0.00)",
+				'symbolWatermarkProperties.color' : "rgba(0, 0, 0, 0.1)",
 				// 图标面板顶部信息文字以及网格坐标数字的颜色
 				// "scalesProperties.textColor" : "#AAA",
 				// k线相关样式
@@ -190,7 +190,7 @@ export class TVChartContainer extends React.PureComponent {
 			// saved_data: {},
 			
 			// 系统自带的Theme: Light | Dark
-			theme: 'Dark'
+			theme: 'Light'
 		};
 
 
